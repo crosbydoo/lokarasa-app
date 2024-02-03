@@ -1,6 +1,6 @@
-# bloc_skeleton
+# Flutter App
 
-Flutter skeleton with BLoC state management
+Flutter App with BLoC state management
 
 ## Getting Started
 
