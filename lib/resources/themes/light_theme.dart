@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/resources/themes/color_schemes.g.dart';
 
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
@@ -6,7 +7,5 @@ ThemeData lightMode = ThemeData(
   navigationBarTheme: const NavigationBarThemeData(
     labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
   ),
-  colorScheme: const ColorScheme.light(
-    background: Colors.white,
-  ),
+  colorScheme: lightColorScheme,
 );

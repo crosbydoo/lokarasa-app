@@ -7,11 +7,11 @@ class CommonButton extends StatelessWidget {
   final bool outlined;
 
   const CommonButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.outlined = false,
-  }) : super(key: key);
+  });
 
   factory CommonButton.normalButton({
     Key? key,
@@ -45,6 +45,9 @@ class CommonButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           backgroundColor: outlined ? Colors.white : Colors.blue,
           side: outlined ? const BorderSide(color: Colors.blue) : null,
         ),

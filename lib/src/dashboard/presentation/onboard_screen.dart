@@ -46,7 +46,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 alignment: Alignment.bottomCenter,
                 child: CommonButton.normalButton(
                   onPressed: () {
-                    context.go(NamedRouter.rootPage);
+                    context.go(NamedRouter.homePage);
                   },
                   text: 'Get Started',
                 ),

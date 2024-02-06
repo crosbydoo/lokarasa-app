@@ -1,9 +1,13 @@
 class NamedRouter {
-  static const rootPage = '/';
+  static const splashPage = '/';
+  static const homePage = '/home';
   static const notFound = '/notfound';
-  static const splashPage = '/splashscreen';
   static const onboardPage = '/onboard';
   static const bookmarkPage = '/bookmark';
   static const profilePage = '/profile';
-  static const detailRestaurant = '/detailrestaurant';
+  static const initAllRestaurantPage = 'allrestaurant';
+  static const goAllRestaurantPage = '/home/allrestaurant';
+  static const initDetailRestaurantPage = 'detailrestaurant/:id';
+  static const goDetail = '/home/allrestaurant/detailrestaurant';
+  static const goDetailFromBookmark = '/bookmark/detailrestaurant';
 }

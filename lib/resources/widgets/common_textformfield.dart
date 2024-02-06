@@ -5,14 +5,14 @@ class CommonTextForm extends StatelessWidget {
     super.key,
     required this.obscured,
     required this.hint,
-    required this.icon,
-    required this.controller,
+    this.icon,
+    this.controller,
   });
 
   final String hint;
   final bool obscured;
-  final IconData icon;
-  final TextEditingController controller;
+  final IconData? icon;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,9 @@ class CommonTextForm extends StatelessWidget {
       obscureText: obscured,
       decoration: InputDecoration(
         hintText: hint,
-        prefixIcon: Icon(icon),
+        prefixIcon: icon != null ? Icon(icon) : null,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
     );

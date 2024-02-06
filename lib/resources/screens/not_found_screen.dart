@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restaurant_app/core/routes/named_router.dart';
 import 'package:restaurant_app/resources/styles/typograph.dart';
 
 class NotFoundScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class NotFoundScreen extends StatelessWidget {
             const Gap(32),
             ElevatedButton(
               onPressed: () {
-                context.go('/');
+                context.go(NamedRouter.homePage);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[400],

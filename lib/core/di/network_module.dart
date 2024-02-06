@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:restaurant_app/core/constant/app_constant.dart';
 import 'package:restaurant_app/core/data/remote/interceptors/auth_interceptor.dart';
+import 'package:restaurant_app/flavors.dart';
 
 @module
 abstract class NetworkModule {
   @Named('base_url')
   @singleton
-  String get baseUrl => AppConstant.appBaseUrl;
+  String get baseUrl => F.baseUrl;
 
   @singleton
   AuthInterceptor get authInterceptor => AuthInterceptor();

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant_app/core/routes/named_router.dart';
+import 'package:restaurant_app/resources/styles/typograph.dart';
 
 class DashboardScreen extends StatefulWidget {
   final Widget child;
-  const DashboardScreen({required this.child, Key? key}) : super(key: key);
+  const DashboardScreen({required this.child, super.key});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -17,7 +18,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _currentIndex.value = index;
     switch (index) {
       case 0:
-        context.go(NamedRouter.rootPage);
+        context.go(NamedRouter.homePage);
         break;
       case 1:
         context.go(NamedRouter.bookmarkPage);
@@ -40,6 +41,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             currentIndex: _currentIndex.value,
             onTap: _onTap,
             showUnselectedLabels: false,
+            selectedLabelStyle: StyleTypograph.body1.medium.copyWith(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : const Color(0xFF37533A),
+            ),
+            selectedItemColor: Colors.blue.shade600,
+            useLegacyColorScheme: false,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -51,7 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_rounded),
-                label: 'Profile',
+                label: 'Dev Profile',
               ),
             ],
           );
