@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - "release-app"
 
 jobs:
   build:
@@ -20,14 +19,16 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: dart format
       - run: flutter analyze .
       - run: flutter build apk --flavor production -t lib/main_production.dart
+
       - uses: ncipollo/release-action@v1.10.0
         with:
-          commit: master
-          tag: release-app
+          commit: main
+          tag: "release-app"
           artifacts: "build/app/outputs/apk/production/release/*.apk"
+          allowUpdates: true
+
       - uses: actions/upload-artifact@v2
         with:
           name: release-apk
