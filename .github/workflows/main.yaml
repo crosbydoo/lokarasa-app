@@ -26,5 +26,6 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
-          tag: v0.0.1
-          path: build/app/outputs/apk/production/release/app-production-release.apk
+          tag: v1.0.0
+          artifacts: "build/app/outputs/apk/production/release/app-production-release.apk"
+          # path: build/app/outputs/apk/production/release/app-production-release.apk
