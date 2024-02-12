@@ -176,7 +176,7 @@ class _ProfileBodyContentState extends State<ProfileBodyContent> {
               );
             }),
           ),
-          Gap(200),
+          Gap(100),
         ],
       ),
     );
