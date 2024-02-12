@@ -5,10 +5,12 @@ class RestaurantStateData extends Equatable {
   final ErrorDto? error;
   final DetailRestaurantDto detailData;
   final List<RestaurantDto> data;
+  final List<CustomerReview> dataReview;
 
   const RestaurantStateData({
     this.detailData = const DetailRestaurantDto(),
     this.error,
+    this.dataReview = const [],
     this.data = const [],
   });
 
@@ -17,17 +19,20 @@ class RestaurantStateData extends Equatable {
         data,
         error,
         detailData,
+        dataReview,
       ];
 
   RestaurantStateData copyWith({
     ErrorDto? error,
     List<RestaurantDto>? data,
-    final DetailRestaurantDto? detailData,
+    DetailRestaurantDto? detailData,
+    List<CustomerReview>? dataReview,
   }) {
     return RestaurantStateData(
       data: data ?? this.data,
       error: error ?? this.error,
       detailData: detailData ?? this.detailData,
+      dataReview: dataReview ?? this.dataReview,
     );
   }
 }
@@ -62,4 +67,12 @@ class RestaurantDetailSuccessState extends RestaurantState {
 
 class RestaurantDetailFailedState extends RestaurantState {
   const RestaurantDetailFailedState(super.data);
+}
+
+class ReviewSuccessState extends RestaurantState {
+  const ReviewSuccessState(super.data);
+}
+
+class ReviewFailedState extends RestaurantState {
+  const ReviewFailedState(super.data);
 }

@@ -124,6 +124,43 @@ class _RestaurantService implements RestaurantService {
     return value;
   }
 
+  @override
+  Future<BaseReviewResponse<List<CustomerReview>>> addReview(
+      AddReviewRequest reviewRequest) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(reviewRequest.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseReviewResponse<List<CustomerReview>>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/review',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = BaseReviewResponse<List<CustomerReview>>.fromJson(
+      _result.data!,
+      (json) => json is List<dynamic>
+          ? json
+              .map<CustomerReview>(
+                  (i) => CustomerReview.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
+    );
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

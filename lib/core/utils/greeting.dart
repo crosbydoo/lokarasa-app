@@ -1,15 +1,11 @@
 String greetingTime() {
   final hour = DateTime.now().hour;
 
-  if (hour < 4) {
-    return 'Selamat Malam';
-  } else if (hour < 11) {
-    return 'Selamat Pagi';
-  } else if (hour < 15) {
-    return 'Selamat Siang';
-  } else if (hour < 18) {
-    return 'Selamat Sore';
+  if (hour < 12) {
+    return 'Good Morning';
+  } else if (hour < 17) {
+    return 'Good Afternoon';
   } else {
-    return 'Selamat Malam';
+    return 'Good Evening';
   }
 }

@@ -1,8 +1,10 @@
 import 'package:restaurant_app/core/data/remote/responses/base_response.dart';
 import 'package:restaurant_app/core/data/remote/responses/base_response_pagination.dart';
 import 'package:restaurant_app/core/data/remote/responses/base_response_search.dart';
+import 'package:restaurant_app/core/data/remote/responses/base_review_response.dart';
 import 'package:restaurant_app/core/utils/future_util.dart';
 import 'package:restaurant_app/core/utils/typedef_util.dart';
+import 'package:restaurant_app/src/restaurant/data/remote/requests/add_review_request.dart';
 import 'package:restaurant_app/src/restaurant/data/remote/responses/detail_restaurant_response.dart';
 import 'package:restaurant_app/src/restaurant/data/remote/responses/restaurant_response.dart';
 import 'package:restaurant_app/src/restaurant/data/remote/services/restaurant_service.dart';
@@ -31,5 +33,13 @@ class RestaurantRepositoryImpl extends RestaurantRepository {
   FutureOrError<BaseResponse<DetailRestaurantResponse>> getDetailRestaurant(
       {String? id}) {
     return callOrError(() => _services.getDetailRestaurant(id: id));
+  }
+
+  @override
+  FutureOrError<BaseReviewResponse<List<CustomerReview>>> addReview(
+      AddReviewRequest addReviewRequest) {
+    return callOrError(
+      () => _services.addReview(addReviewRequest),
+    );
   }
 }

@@ -59,7 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_rounded),
-                label: 'Dev Profile',
+                label: 'Profile',
               ),
             ],
           );

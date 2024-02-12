@@ -24,6 +24,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
     bloc = RestaurantBloc(
       usecase: GetIt.instance(),
       detailUsecase: GetIt.instance(),
+      reviewUsecase: GetIt.instance(),
     )
       ..add(RestaurantInitEvent())
       ..add(RestaurantShowListEvent());
@@ -46,7 +47,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               ),
             ),
             Text(
-              'Mau makan dimana?',
+              'Where you want to go?',
               style: StyleTypograph.label1.medium,
             ),
             Container(
@@ -83,7 +84,6 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           onPressed: () {
                             context.go(
                               NamedRouter.goAllRestaurantPage,
-                              extra: state,
                             );
                           },
                           child: Text(

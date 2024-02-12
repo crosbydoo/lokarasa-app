@@ -20,25 +20,19 @@ class DetailRestaurantScreen extends StatefulWidget {
 
 class _DetailRestaurantScreenState extends State<DetailRestaurantScreen> {
   late RestaurantBloc bloc;
-  final TextEditingController nameInput = TextEditingController();
 
   late Box<BookmarkDto> boxBookmark;
-  bool isBookmarked = false;
 
   @override
   void initState() {
     bloc = RestaurantBloc(
       detailUsecase: GetIt.instance(),
       usecase: GetIt.instance(),
+      reviewUsecase: GetIt.instance(),
     )..add(RestaurantShowDetailEvent(id: widget.id!));
 
     initializeHive();
     super.initState();
-  }
-
-  initHive() async {
-    boxBookmark = await Hive.openBox<BookmarkDto>('bookmarkBox');
-    return boxBookmark;
   }
 
   Future<Box<BookmarkDto>> initializeHive() async {
@@ -60,10 +54,20 @@ class _DetailRestaurantScreenState extends State<DetailRestaurantScreen> {
             elevation: 0,
           ),
           extendBodyBehindAppBar: true,
-          body: Stack(
-            children: [
-              showHeaderData(state),
-            ],
+          body: RefreshIndicator(
+            onRefresh: () async {
+              bloc.add(RestaurantShowDetailEvent(id: widget.id!));
+              CommonSnackbar.showInfoSnackbar(
+                context: context,
+                title: 'Refresh',
+                message: 'Data Updated',
+              );
+            },
+            child: Stack(
+              children: [
+                showHeaderData(state),
+              ],
+            ),
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
@@ -106,21 +110,22 @@ class _DetailRestaurantScreenState extends State<DetailRestaurantScreen> {
                                   city: state.data.detailData.city,
                                   rating: state.data.detailData.rating,
                                   idPicture: state.data.detailData.pictureId,
+                                  isBookmark: true,
                                 ),
                               );
-                              isBookmarked = true;
                             });
                             CommonSnackbar.showSuccessSnackbar(
-                              context,
-                              'Success',
-                              'Successfully adding to bookmark',
+                              context: context,
+                              title: 'Success',
+                              message: 'Successfully adding to bookmark',
                             );
                           }
                         },
                         child: Icon(
                           Icons.bookmark,
                           size: 30,
-                          color: isBookmarked
+                          color: boxBookmark.containsKey(
+                                  'key_${state.data.detailData.id}')
                               ? Colors.green.shade700
                               : Colors.white,
                         ),
@@ -149,7 +154,7 @@ class _DetailRestaurantScreenState extends State<DetailRestaurantScreen> {
                             child: SafeArea(
                               top: false,
                               child: FormReviewComponent(
-                                controller: nameInput,
+                                id: state.data.detailData.id,
                               ),
                             ),
                           );
@@ -178,8 +183,6 @@ class _DetailRestaurantScreenState extends State<DetailRestaurantScreen> {
       var category = result.categories;
       var menus = result.menus;
       var review = result.customerReviews;
-
-      print('check $menus');
 
       return ListView(
         padding: EdgeInsets.zero,

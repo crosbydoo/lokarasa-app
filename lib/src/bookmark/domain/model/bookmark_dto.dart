@@ -10,6 +10,7 @@ class BookmarkDto {
     required this.city,
     required this.rating,
     required this.idPicture,
+    this.isBookmark = false,
   });
 
   @HiveField(0)
@@ -26,4 +27,7 @@ class BookmarkDto {
 
   @HiveField(4)
   String idPicture;
+
+  @HiveField(5)
+  bool? isBookmark;
 }

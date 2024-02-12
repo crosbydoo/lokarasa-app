@@ -11,10 +11,13 @@ class SearchRestaurantUsecase {
 
   SearchRestaurantUsecase(this._repository);
 
-  FutureOrError<BaseResponseSearchDto<RestaurantDto>> execute(
-      {String? keyword}) {
+  FutureOrError<BaseResponseSearchDto<RestaurantDto>> execute({
+    int? founded = 20,
+    String? keyword,
+  }) {
     return _repository.getSearchData(keyword: keyword).mapRight((response) {
       var data = response.restaurants?.map(_mapDto).toList() ?? [];
+
       return BaseResponseSearchDto(
         restaurants: data,
         founded: data.length,

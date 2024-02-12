@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:restaurant_app/core/data/remote/responses/base_response.dart';
 import 'package:restaurant_app/core/data/remote/responses/base_response_pagination.dart';
 import 'package:restaurant_app/core/data/remote/responses/base_response_search.dart';
+import 'package:restaurant_app/core/data/remote/responses/base_review_response.dart';
+import 'package:restaurant_app/src/restaurant/data/remote/requests/add_review_request.dart';
 import 'package:restaurant_app/src/restaurant/data/remote/responses/detail_restaurant_response.dart';
 import 'package:restaurant_app/src/restaurant/data/remote/responses/restaurant_response.dart';
 import 'package:retrofit/http.dart';
@@ -24,4 +26,9 @@ abstract class RestaurantService {
   Future<BaseResponse<DetailRestaurantResponse>> getDetailRestaurant({
     @Path('id') String? id,
   });
+
+  @POST('/review')
+  Future<BaseReviewResponse<List<CustomerReview>>> addReview(
+    @Body() AddReviewRequest reviewRequest,
+  );
 }

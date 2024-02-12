@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:restaurant_app/core/domain/models/error_dto.dart';
+import 'package:restaurant_app/src/restaurant/data/remote/requests/add_review_request.dart';
+import 'package:restaurant_app/src/restaurant/data/remote/responses/detail_restaurant_response.dart';
 import 'package:restaurant_app/src/restaurant/domain/models/detail_restaurant_dto.dart';
 import 'package:restaurant_app/src/restaurant/domain/models/restaurant_dto.dart';
+import 'package:restaurant_app/src/restaurant/domain/usecases/add_review_usecase.dart';
 import 'package:restaurant_app/src/restaurant/domain/usecases/get_detail_restaurant_usecase.dart';
 import 'package:restaurant_app/src/restaurant/domain/usecases/get_restaurant_usecase.dart';
 
@@ -12,13 +15,18 @@ part 'restaurant_state.dart';
 class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
   final GetRestaurantUsecase usecase;
   final GetDetailRestaurantUsecase detailUsecase;
+  final AddReviewUsecase reviewUsecase;
   var stateData = const RestaurantStateData();
 
-  RestaurantBloc({required this.detailUsecase, required this.usecase})
-      : super(const RestaurantInitialState()) {
+  RestaurantBloc({
+    required this.detailUsecase,
+    required this.usecase,
+    required this.reviewUsecase,
+  }) : super(const RestaurantInitialState()) {
     on<RestaurantInitEvent>(_onInit);
     on<RestaurantShowListEvent>(_getListRestaurant);
     on<RestaurantShowDetailEvent>(_getDetailRestaurant);
+    on<AddReviewEvent>(_addReviewRestaurant);
   }
 
   void _onInit(
@@ -69,6 +77,29 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
           error: null,
         );
         emit(RestaurantDetailSuccessState(stateData));
+      },
+    );
+  }
+
+  void _addReviewRestaurant(
+    AddReviewEvent event,
+    Emitter<RestaurantState> emit,
+  ) async {
+    var request =
+        AddReviewRequest(id: event.id, name: event.name, review: event.review);
+
+    var resultSearch = await reviewUsecase.execute(request);
+
+    resultSearch.fold(
+      (error) {
+        emit(ReviewFailedState(stateData.copyWith(error: error)));
+      },
+      (response) {
+        stateData = stateData.copyWith(
+          dataReview: response,
+          error: null,
+        );
+        emit(ReviewSuccessState(stateData));
       },
     );
   }

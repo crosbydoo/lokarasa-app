@@ -9,12 +9,11 @@ import 'package:restaurant_app/src/dashboard/presentation/profile/dashboard_prof
 import 'package:restaurant_app/resources/screens/not_found_screen.dart';
 import 'package:restaurant_app/src/dashboard/presentation/onboard_screen.dart';
 import 'package:restaurant_app/resources/screens/splash_screen.dart';
-import 'package:restaurant_app/src/restaurant/presentation/bloc/restaurant/restaurant_bloc.dart';
 import 'package:restaurant_app/src/restaurant/presentation/screens/all_restaurant_screen.dart';
 import 'package:restaurant_app/src/restaurant/presentation/screens/detail_restaurant_screen.dart';
 
 class AppRouter {
-  static final _rootNavigator = GlobalKey<NavigatorState>(debugLabel: 'root');
+  // static final _rootNavigator = GlobalKey<NavigatorState>(debugLabel: 'root');
   static final _shellNavigator = GlobalKey<NavigatorState>(debugLabel: 'shell');
 
   static final router = GoRouter(
@@ -42,13 +41,15 @@ class AppRouter {
                 parentNavigatorKey: Get.key,
                 path: NamedRouter.initAllRestaurantPage,
                 builder: (context, state) {
-                  RestaurantState states = state.extra! as RestaurantState;
-                  return AllRestaurantScreen(state: states);
+                  // RestaurantState states = state.extra! as RestaurantState;
+                  // return AllRestaurantScreen(state: states);
+                  return AllRestaurantScreen();
                 },
                 routes: [
                   GoRoute(
                     parentNavigatorKey: Get.key,
                     path: NamedRouter.initDetailRestaurantPage,
+                    name: 'detail-fromlist',
                     builder: (context, state) {
                       return DetailRestaurantScreen(
                         id: state.pathParameters['id'],

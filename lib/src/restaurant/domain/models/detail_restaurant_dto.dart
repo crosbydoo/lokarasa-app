@@ -55,7 +55,7 @@ class CustomerReviewDto {
 
   @override
   String toString() {
-    return 'CategoryDto{ name$name, review:$review, date:$date }';
+    return 'CustomerReviewDto{ name$name, review:$review, date:$date }';
   }
 }
 

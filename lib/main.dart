@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
-      title: 'Flutter Bloc Skeleton',
+      title: 'Lokarasa App',
       theme: Provider.of<ThemeProvider>(context).themeData,
       debugShowCheckedModeBanner: false,
       routeInformationParser: AppRouter.router.routeInformationParser,

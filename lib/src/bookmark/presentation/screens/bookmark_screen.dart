@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:restaurant_app/core/constant/app_constant.dart';
 import 'package:restaurant_app/resources/styles/typograph.dart';
+import 'package:restaurant_app/resources/widgets/common_snackbar.dart';
 import 'package:restaurant_app/src/bookmark/domain/model/bookmark_dto.dart';
 
 class BookmarkScreen extends StatefulWidget {
@@ -76,7 +77,9 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme == Brightness.light
+                            ? Colors.white
+                            : Colors.grey,
                       ),
                     ),
                     child: Row(
@@ -133,12 +136,17 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                         IconButton(
                           icon: Icon(
                             Icons.bookmark,
-                            size: 40,
+                            size: 30,
                             color: Colors.green.shade400,
                           ),
                           onPressed: () {
                             setState(() {
                               boxBookmark.deleteAt(index);
+                              CommonSnackbar.showSuccessSnackbar(
+                                context: context,
+                                title: 'Success',
+                                message: 'Unbookmark berhasil',
+                              );
                             });
                           },
                         ),

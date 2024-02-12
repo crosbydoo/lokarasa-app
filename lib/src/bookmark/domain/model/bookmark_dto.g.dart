@@ -22,13 +22,14 @@ class BookmarkDtoAdapter extends TypeAdapter<BookmarkDto> {
       city: fields[2] as String,
       rating: fields[3] as double,
       idPicture: fields[4] as String,
+      isBookmark: fields[5] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, BookmarkDto obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class BookmarkDtoAdapter extends TypeAdapter<BookmarkDto> {
       ..writeByte(3)
       ..write(obj.rating)
       ..writeByte(4)
-      ..write(obj.idPicture);
+      ..write(obj.idPicture)
+      ..writeByte(5)
+      ..write(obj.isBookmark);
   }
 
   @override

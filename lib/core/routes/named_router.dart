@@ -9,5 +9,4 @@ class NamedRouter {
   static const goAllRestaurantPage = '/home/allrestaurant';
   static const initDetailRestaurantPage = 'detailrestaurant/:id';
   static const goDetail = '/home/allrestaurant/detailrestaurant';
-  static const goDetailFromBookmark = '/bookmark/detailrestaurant';
 }

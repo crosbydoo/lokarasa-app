@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant_app/core/constant/app_constant.dart';
-import 'package:restaurant_app/core/routes/named_router.dart';
 import 'package:restaurant_app/resources/styles/typograph.dart';
-import 'package:restaurant_app/src/restaurant/presentation/bloc/restaurant/restaurant_bloc.dart';
+import 'package:restaurant_app/resources/widgets/common_textformfield.dart';
+import 'package:restaurant_app/src/restaurant/presentation/bloc/search_restaurant/search_restaurant_bloc.dart';
 
 class AllRestaurantScreen extends StatefulWidget {
-  const AllRestaurantScreen({super.key, required this.state});
-  final RestaurantState? state;
+  const AllRestaurantScreen({super.key});
 
   @override
   State<AllRestaurantScreen> createState() => _AllRestaurantScreenState();
 }
 
 class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
+  late SearchRestaurantBloc searchBloc;
+
+  final searchText = TextEditingController();
+
+  @override
+  void initState() {
+    searchBloc = SearchRestaurantBloc(
+      searchRestaurantUsecase: GetIt.instance(),
+    )..add(SearchRestaurantInitEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +37,51 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
           style: StyleTypograph.heading3.medium,
         ),
       ),
-      body: showAll(widget.state!),
+      body: BlocConsumer<SearchRestaurantBloc, SearchRestaurantState>(
+        bloc: searchBloc,
+        listener: (context, state) {},
+        builder: (context, state) {
+          print('check $state');
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 20,
+                ),
+                child: CommonTextForm(
+                  obscured: false,
+                  hint: 'Search name, kategori dan menu',
+                  controller: searchText,
+                  suffixIcon: Icons.search,
+                  onpress: () {
+                    searchBloc.add(
+                      SearchRestaurantResultEvent(
+                        searchKeyword: searchText.text,
+                        founded: state.data.founded,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Expanded(
+                child: showAll(state),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 
-  Widget showAll(RestaurantState state) {
-    if (state is RestaurantSuccesState) {
-      var result = state.data.data;
+  Widget showAll(SearchRestaurantState state) {
+    if (state is SearchRestaurantSuccessState) {
+      var result = state.data.restaurant;
+      if (result.isEmpty) {
+        return Center(
+          child: Text('No restaurants found.'),
+        );
+      }
       return Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -48,7 +99,11 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
 
             return InkWell(
               onTap: () {
-                context.go(NamedRouter.goDetail);
+                var idRestaurant = dataIndex.id;
+                context.goNamed(
+                  'detail-fromlist',
+                  pathParameters: {'id': idRestaurant},
+                );
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -145,6 +200,14 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
             );
           }),
         ),
+      );
+    } else if (state is SearchRestaurantLoadingState) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (state is SearchRestaurantFailedState) {
+      return Center(
+        child: Text('Failed to fetch restaurants.'),
       );
     }
     return const Text('No data');

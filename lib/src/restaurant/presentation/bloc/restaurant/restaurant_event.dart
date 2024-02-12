@@ -22,3 +22,18 @@ class RestaurantShowDetailEvent extends RestaurantEvent {
   @override
   List<Object?> get props => [id];
 }
+
+class AddReviewEvent extends RestaurantEvent {
+  final String id;
+  final String name;
+  final String review;
+
+  AddReviewEvent({
+    this.id = '',
+    this.name = '',
+    this.review = '',
+  });
+
+  @override
+  List<Object> get props => [id, name, review];
+}

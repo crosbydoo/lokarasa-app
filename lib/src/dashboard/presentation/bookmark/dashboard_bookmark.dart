@@ -45,7 +45,7 @@ class _DashboardBookmarkState extends State<DashboardBookmark> {
                 Gap(10),
                 Expanded(
                   child: Text(
-                    'Fitur Bookmark memudahkan kita agar tidak lupa tempat favoritemu.',
+                    'The Bookmark feature makes it easy for us not to forget your favorite places.',
                     style: StyleTypograph.label2.medium.copyWith(fontSize: 15),
                   ),
                 ),
