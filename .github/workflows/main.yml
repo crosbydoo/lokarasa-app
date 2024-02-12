@@ -1,4 +1,4 @@
-name: Flutter Build
+name: relese app
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - run: flutter pub get
       - run: dart format
       - run: flutter analyze .
-      - run: build apk --flavor production -t lib/main_production.dart
+      - run: flutter build apk --flavor production -t lib/main_production.dart
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
