@@ -1,4 +1,4 @@
-name: relese app
+name: Lokarasa App
 
 on:
   push:
@@ -10,8 +10,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
@@ -22,11 +24,11 @@ jobs:
       - run: flutter analyze .
       - run: flutter build apk --flavor production -t lib/main_production.dart
 
-      - uses: ncipollo/release-action@v1.10.0
+      - uses: ncipollo/release-action@v1
         with:
+          artifacts: "build/app/outputs/apk/production/release/*.apk"
           commit: main
           tag: "release-app"
-          artifacts: "build/app/outputs/apk/production/release/*.apk"
           allowUpdates: true
 
       - uses: actions/upload-artifact@v2
