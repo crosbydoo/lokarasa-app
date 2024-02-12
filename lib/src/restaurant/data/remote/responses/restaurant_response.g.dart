@@ -15,13 +15,3 @@ RestaurantResponse _$RestaurantResponseFromJson(Map<String, dynamic> json) =>
       city: json['city'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),
     );
-
-Map<String, dynamic> _$RestaurantResponseToJson(RestaurantResponse instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'description': instance.description,
-      'pictureId': instance.pictureId,
-      'city': instance.city,
-      'rating': instance.rating,
-    };

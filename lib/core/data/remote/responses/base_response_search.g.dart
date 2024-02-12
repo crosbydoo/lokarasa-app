@@ -16,24 +16,8 @@ BaseResponseSearch<T> _$BaseResponseSearchFromJson<T>(
       restaurants: _$nullableGenericFromJson(json['restaurants'], fromJsonT),
     );
 
-Map<String, dynamic> _$BaseResponseSearchToJson<T>(
-  BaseResponseSearch<T> instance,
-  Object? Function(T value) toJsonT,
-) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'founded': instance.founded,
-      'restaurants': _$nullableGenericToJson(instance.restaurants, toJsonT),
-    };
-
 T? _$nullableGenericFromJson<T>(
   Object? input,
   T Function(Object? json) fromJson,
 ) =>
     input == null ? null : fromJson(input);
-
-Object? _$nullableGenericToJson<T>(
-  T? input,
-  Object? Function(T value) toJson,
-) =>
-    input == null ? null : toJson(input);

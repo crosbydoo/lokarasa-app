@@ -11,9 +11,3 @@ ErrorResponse _$ErrorResponseFromJson(Map<String, dynamic> json) =>
       error: json['error'] as bool?,
       message: json['message'] as String?,
     );
-
-Map<String, dynamic> _$ErrorResponseToJson(ErrorResponse instance) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'message': instance.message,
-    };

@@ -27,28 +27,9 @@ DetailRestaurantResponse _$DetailRestaurantResponseFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$DetailRestaurantResponseToJson(
-        DetailRestaurantResponse instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'description': instance.description,
-      'city': instance.city,
-      'address': instance.address,
-      'pictureId': instance.pictureId,
-      'categories': instance.categories,
-      'menus': instance.menus,
-      'rating': instance.rating,
-      'customerReviews': instance.customerReviews,
-    };
-
 Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       name: json['name'] as String?,
     );
-
-Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
-      'name': instance.name,
-    };
 
 CustomerReview _$CustomerReviewFromJson(Map<String, dynamic> json) =>
     CustomerReview(
@@ -56,13 +37,6 @@ CustomerReview _$CustomerReviewFromJson(Map<String, dynamic> json) =>
       review: json['review'] as String?,
       date: json['date'] as String?,
     );
-
-Map<String, dynamic> _$CustomerReviewToJson(CustomerReview instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'review': instance.review,
-      'date': instance.date,
-    };
 
 Menus _$MenusFromJson(Map<String, dynamic> json) => Menus(
       foods: (json['foods'] as List<dynamic>?)
@@ -72,8 +46,3 @@ Menus _$MenusFromJson(Map<String, dynamic> json) => Menus(
           ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
-
-Map<String, dynamic> _$MenusToJson(Menus instance) => <String, dynamic>{
-      'foods': instance.foods,
-      'drinks': instance.drinks,
-    };
