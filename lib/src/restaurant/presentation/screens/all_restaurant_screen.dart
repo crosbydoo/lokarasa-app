@@ -41,7 +41,6 @@ class _AllRestaurantScreenState extends State<AllRestaurantScreen> {
         bloc: searchBloc,
         listener: (context, state) {},
         builder: (context, state) {
-          print('check $state');
           return Column(
             children: [
               Padding(

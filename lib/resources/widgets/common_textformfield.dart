@@ -9,6 +9,7 @@ class CommonTextForm extends StatelessWidget {
     this.controller,
     this.suffixIcon,
     this.onpress,
+    this.validator,
   });
 
   final String hint;
@@ -16,6 +17,7 @@ class CommonTextForm extends StatelessWidget {
   final IconData? icon;
   final IconData? suffixIcon;
   final VoidCallback? onpress;
+  final String Function(String?)? validator;
   final TextEditingController? controller;
 
   @override
@@ -36,6 +38,7 @@ class CommonTextForm extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
       ),
+      validator: validator,
     );
   }
 }

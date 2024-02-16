@@ -5,23 +5,28 @@ class CommonButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final bool outlined;
+  final bool disabled; // New property for button disabled state
 
   const CommonButton({
-    super.key,
+    Key? key,
     required this.text,
     required this.onPressed,
     this.outlined = false,
+    this.disabled = false, // Default value is false (button is enabled)
   });
 
   factory CommonButton.normalButton({
     Key? key,
     required String text,
     required VoidCallback onPressed,
+    bool disabled = false, // New parameter with default value
   }) {
     return CommonButton(
       key: key,
       text: text,
       onPressed: onPressed,
+      disabled:
+          disabled, // Assign the disabled parameter to the disabled property
     );
   }
 
@@ -29,12 +34,15 @@ class CommonButton extends StatelessWidget {
     Key? key,
     required String text,
     required VoidCallback onPressed,
+    bool disabled = false, // New parameter with default value
   }) {
     return CommonButton(
       key: key,
       text: text,
       onPressed: onPressed,
       outlined: true,
+      disabled:
+          disabled, // Assign the disabled parameter to the disabled property
     );
   }
 
@@ -43,7 +51,9 @@ class CommonButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: disabled
+            ? null
+            : onPressed, // Disable the button if disabled is true
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

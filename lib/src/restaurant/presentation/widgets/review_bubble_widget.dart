@@ -34,15 +34,22 @@ class ReviewBubbleWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'By: $userReview',
-                overflow: TextOverflow.ellipsis,
-                style: StyleTypograph.body1.medium,
+              Expanded(
+                child: Text(
+                  'By: $userReview',
+                  overflow: TextOverflow.ellipsis,
+                  style: StyleTypograph.body1.medium,
+                ),
               ),
-              Text(
-                dateReview,
-                overflow: TextOverflow.ellipsis,
-                style: StyleTypograph.body1.regular,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    dateReview,
+                    overflow: TextOverflow.ellipsis,
+                    style: StyleTypograph.body1.regular,
+                  ),
+                ),
               ),
             ],
           ),

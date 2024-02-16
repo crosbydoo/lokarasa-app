@@ -85,8 +85,11 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
     AddReviewEvent event,
     Emitter<RestaurantState> emit,
   ) async {
-    var request =
-        AddReviewRequest(id: event.id, name: event.name, review: event.review);
+    var request = AddReviewRequest(
+      id: event.id,
+      name: event.name,
+      review: event.review,
+    );
 
     var resultSearch = await reviewUsecase.execute(request);
 
