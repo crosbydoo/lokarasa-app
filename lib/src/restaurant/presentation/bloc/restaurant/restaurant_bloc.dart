@@ -102,7 +102,11 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
           dataReview: response,
           error: null,
         );
+
         emit(ReviewSuccessState(stateData));
+
+        // add(RestaurantShowDetailEvent(id: event.id));
+        // emit(RestaurantDetailSuccessState(stateData));
       },
     );
   }

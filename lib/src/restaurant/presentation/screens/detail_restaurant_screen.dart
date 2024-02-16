@@ -40,6 +40,12 @@ class _DetailRestaurantScreenState extends State<DetailRestaurantScreen> {
     return boxBookmark;
   }
 
+  void refreshData() {
+    setState(() {
+      bloc.add(RestaurantShowDetailEvent(id: widget.id!));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RestaurantBloc, RestaurantState>(
@@ -159,6 +165,8 @@ class _DetailRestaurantScreenState extends State<DetailRestaurantScreen> {
                             ),
                           );
                         },
+                      ).then(
+                        (value) => refreshData(),
                       );
                     },
                   ),

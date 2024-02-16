@@ -15,9 +15,9 @@ class RestaurantShowListEvent extends RestaurantEvent {
 }
 
 class RestaurantShowDetailEvent extends RestaurantEvent {
-  final String id;
+  final String? id;
 
-  const RestaurantShowDetailEvent({required this.id});
+  const RestaurantShowDetailEvent({this.id});
 
   @override
   List<Object?> get props => [id];

@@ -1,50 +1,48 @@
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restaurant_app/src/restaurant/presentation/bloc/restaurant/restaurant_bloc.dart';
+
+import 'package:restaurant_app/resources/styles/typograph.dart';
+import 'package:restaurant_app/resources/widgets/common_button.dart';
 import 'package:restaurant_app/resources/widgets/common_snackbar.dart';
 import 'package:restaurant_app/resources/widgets/common_textformfield.dart';
-import 'package:restaurant_app/resources/widgets/common_button.dart';
-import 'package:restaurant_app/resources/styles/typograph.dart';
-import 'package:gap/gap.dart';
+import 'package:restaurant_app/src/restaurant/presentation/bloc/restaurant/restaurant_bloc.dart';
 
-class FormReviewComponent extends HookWidget {
+class FormReviewComponent extends StatefulWidget {
   const FormReviewComponent({super.key, required this.id});
 
   final String id;
 
   @override
+  State<FormReviewComponent> createState() => _FormReviewComponentState();
+}
+
+class _FormReviewComponentState extends State<FormReviewComponent> {
+  final TextEditingController nameInput = TextEditingController();
+  final TextEditingController reviewInput = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  late RestaurantBloc bloc;
+
+  @override
+  void initState() {
+    bloc = RestaurantBloc(
+      detailUsecase: GetIt.instance(),
+      usecase: GetIt.instance(),
+      reviewUsecase: GetIt.instance(),
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final nameInput = useTextEditingController();
-    final reviewInput = useTextEditingController();
-    final formKey = useMemoized(() => GlobalKey<FormState>());
-
-    bool isSubmitDisabled = nameInput.text.isEmpty || reviewInput.text.isEmpty;
-
-    useEffect(() {
-      final subscription =
-          context.read<RestaurantBloc>().stream.listen((state) {
-        if (state is ReviewSuccessState) {
-          CommonSnackbar.showSuccessSnackbar(
-            context: context,
-            title: 'Success',
-            message: 'Successfully adding review',
-          );
-          context.pop(); // Kembali ke halaman sebelumnya
-        }
-      });
-      // Membersihkan langganan saat komponen di-unmount
-      return subscription.cancel;
-    }, []);
-
     return Container(
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.sizeOf(context).height * 0.45,
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Form(
-        key: formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,31 +50,37 @@ class FormReviewComponent extends HookWidget {
               'Add Your Review',
               style: StyleTypograph.heading3.bold,
             ),
-            const Gap(20),
+            Gap(20),
             CommonTextForm(
               controller: nameInput,
               obscured: false,
               hint: 'Your name',
             ),
-            const Gap(12),
+            Gap(12),
             CommonTextForm(
               controller: reviewInput,
               obscured: false,
-              hint: 'Message review',
+              hint: 'Add Review',
             ),
             Spacer(),
             Container(
               child: CommonButton.normalButton(
-                disabled: isSubmitDisabled,
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    context.read<RestaurantBloc>().add(
-                          AddReviewEvent(
-                            id: id,
-                            name: nameInput.text,
-                            review: reviewInput.text,
-                          ),
-                        );
+                onPressed: () async {
+                  if (_formKey.currentState!.validate() == true) {
+                    bloc.add(
+                      AddReviewEvent(
+                        id: widget.id,
+                        name: nameInput.text,
+                        review: reviewInput.text,
+                      ),
+                    );
+                    CommonSnackbar.showSuccessSnackbar(
+                      context: context,
+                      title: 'Success',
+                      message: 'Successfully adding review',
+                    );
+
+                    context.pop(true);
                   }
                 },
                 text: 'Submit',
