@@ -24,6 +24,7 @@ class _FormReviewComponentState extends State<FormReviewComponent> {
 
   final _formKey = GlobalKey<FormState>();
   late RestaurantBloc bloc;
+  bool isSubmitDisabled = true;
 
   @override
   void initState() {
@@ -32,7 +33,15 @@ class _FormReviewComponentState extends State<FormReviewComponent> {
       usecase: GetIt.instance(),
       reviewUsecase: GetIt.instance(),
     );
+    nameInput.addListener(updateSubmitButton);
+    reviewInput.addListener(updateSubmitButton);
     super.initState();
+  }
+
+  void updateSubmitButton() {
+    setState(() {
+      isSubmitDisabled = nameInput.text.isEmpty || reviewInput.text.isEmpty;
+    });
   }
 
   @override
@@ -83,6 +92,7 @@ class _FormReviewComponentState extends State<FormReviewComponent> {
                     context.pop(true);
                   }
                 },
+                disabled: isSubmitDisabled,
                 text: 'Submit',
               ),
             )
